@@ -1,0 +1,171 @@
+{% extends "layouts/baseforlanding.html" %}
+
+{% block title %}final project{% endblock %}
+
+{% block content %}
+<div class="bg-blue-300 flex flex-col-reverse justify-center items-center pt-10 md:pt-20 pb-20 lg:pb-40 lg:flex-row-reverse">
+  <div class="grid rounded-box justify-center px-10">
+      <img src="https://img.freepik.com/free-vector/online-trainer-client-doing-cardio_23-2148541245.jpg?t=st=1713326110~exp=1713329710~hmac=52bd5021752bb322f3d84fd477c616371a92b000cd4edb81a28f1a07e6a75fac&w=1380" alt="React Image" class="rounded-lg object-cover shadow-2xl h-80 w-100" />
+  </div>
+  <div class="pe-10 py-5 max-w-screen self-center px-10">
+      <h1 class="text-2xl font-bold text-slate-700 md:text-4xl">
+          Exercise web application for beginners
+      </h1>
+      <p class="py-6 max-w-lg text-slate-700 md:text-lg">
+        Enhance your practice, boost your motivation, and ensure the correctness of your exercises with our beginner home exercise web application.
+      </p>
+      <div class="flex">
+          <div class="btn bg-yellow-300 hover:bg-yellow-400 text-sm me-5 text-slate-700">
+              <a href="{% url 'PoseCheck:index' %}">Get Started</a>
+          </div>
+          <a class="me-2 self-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 0C5.376 0 0 5.376 0 12C0 18.624 5.376 24 12 24C18.624 24 24 18.624 24 12C24 5.376 18.624 0 12 0ZM15.192 14.076L13.656 14.964L12.12 15.852C10.14 16.992 8.52 16.056 8.52 13.776V12V10.224C8.52 7.932 10.14 7.008 12.12 8.148L13.656 9.036L15.192 9.924C17.172 11.064 17.172 12.936 15.192 14.076Z" fill="#424242" />
+              </svg>
+          </a>
+          <a class="link link-hover self-center text-slate-700 text-sm md:text-lg" onclick="openYouTubeVideo()">Watch video tutorial</a>
+      </div>
+  </div>
+</div>
+
+
+
+    <div class="bg-gray-100">
+        <p class="font-semibold text-center py-10 text-2xl">Our Features</p>
+        <div class="justify-center flex-col lg:space-y-10">
+          <div class="flex flex-col w-full lg:flex-row justify-center ">
+            <div class="grid rounded-box justify-center lg:justify-end px-10">
+              <img
+                src="https://img.freepik.com/free-vector/group-people-displaying-various-kinds-cameras_53876-43141.jpg?t=st=1713328341~exp=1713331941~hmac=8e5d3d836360bdbd1c5ed77b4b5e7a879901da685b7305ff4c40b7bac1fbf719&w=1380"
+                alt="React Image"
+                class="rounded-lg object-cover h-80 w-100"
+              />
+            </div>
+            <div class="ps-10 py-5 max-w-md self-center">
+              <p class=" text-blue-300 text-xl font-semibold capitalize pb-3">
+                detect exercise postures
+              </p>
+              <p class="text-md text-base-content">
+                Exercise with only using just one camera! Our advanced
+                Python-trained model provides precise posture detection and
+                feedback, ensuring effective workouts.
+              </p>
+            </div>
+          </div>
+  
+          <div class="flex flex-col w-full lg:flex-row-reverse justify-center ">
+            <div class="grid rounded-box justify-center lg:justify-end px-10">
+              <img
+                src="https://img.freepik.com/free-vector/woman-practicing-exercise-house-vector-illustration-design_24877-62755.jpg?t=st=1713329982~exp=1713333582~hmac=7484569540444a67af4a0a3de84215238487bf349faee01e5ae5328877e1941c&w=826"
+                alt="React Image"
+                class="rounded-lg object-cover h-60 w-100"
+              />
+            </div>
+            <div class="ps-10 py-5 max-w-md self-center">
+              <p class=" text-blue-300 text-xl font-semibold capitalize pb-3">
+                exercises for beginners
+              </p>
+              <p class="text-md text-base-content">
+                Explore various beginner-friendly workout poses catered for newcomers! Rest assured, all poses are carefully selected to suit those new to exercise who are eager to start their fitness journey.
+              </p>
+            </div>
+          </div>
+  
+          <div class="flex flex-col w-full lg:flex-row justify-center ">
+            <div class="grid rounded-box justify-center lg:justify-end px-10">
+              <img
+                src="https://img.freepik.com/free-vector/people-digital-devices-with-copy-space_53876-64640.jpg?t=st=1713326967~exp=1713330567~hmac=604e8868f11772ede25573addc1df21388c60996f6a462ed4f7dc087455182ff&w=1380"
+                alt="React Image"
+                class="rounded-lg object-cover h-60 w-100"
+              />
+            </div>
+            <div class="ps-10 py-5 max-w-md self-center">
+              <p class=" text-blue-300 text-xl font-semibold capitalize pb-3">
+                access on any device
+              </p>
+              <p class="text-md text-base-content">
+                Access our website seamlessly on mobile phones, tablets, and computers, without the need for additional app downloads.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-100">
+        <p class="font-semibold text-center py-10 text-2xl ">Why PoseCheck</p>
+        <div class="flex flex-col justify-center gap-12 mx-auto lg:flex-row lg:w-full lg:justify-start">
+          <div class="flex flex-col justify-center gap-12 mx-auto lg:flex-row lg:justify-center">
+            <div class="card w-72 h-100 bg-base-100 shadow-md mx-auto lg:mx-0">
+                <figure>
+                    <img src="https://img.freepik.com/free-vector/dance-fitness-home-illustrated_52683-58147.jpg?t=st=1713325833~exp=1713329433~hmac=634c3a872f29e6db847d28f2e443ff8595c2eaa5d54b56acf6caf5cdcf735ccb&w=1380" alt="Shoes">
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title text-blue-300">Beginner</h2>
+                    <p class="text-sm">
+                        Perfect for beginners who are just starting their fitness journey
+                        and have little to no prior exercise experience.
+                    </p>
+                </div>
+            </div>
+        
+            <div class="card w-72 h-100 bg-base-100 shadow-md mx-auto lg:mx-0">
+                <figure>
+                    <img src="https://img.freepik.com/free-vector/home-interior-background-video-conferencing_23-2148658838.jpg?t=st=1713327464~exp=1713331064~hmac=cd585097bf2b87f350efa32f0bfc6279aad26e28944df3501635f48d8c4abdc3&w=1380" alt="Shoes">
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title text-blue-300">Home workout</h2>
+                    <p class="text-sm">
+                        You can easily exercise at home without spending a fortune on
+                        expensive gyms. Achieve a fit body and good health without
+                        spending a dime.
+                    </p>
+                </div>
+            </div>
+        
+            <div class="card w-72 h-100 bg-base-100 shadow-md mx-auto lg:mx-0">
+                <figure>
+                    <img src="https://img.freepik.com/free-vector/hand-drawn-time-management-concept_52683-55190.jpg?t=st=1713327421~exp=1713331021~hmac=2d47dcee74a8e69505e2537b952798ae036cbb5f8c4da070757821f331139493&w=1380" alt="Shoes">
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title text-blue-300">No time to workout</h2>
+                    <p class="text-sm">
+                        No matter how busy you are, you can still exercise! Just spend
+                        around 30-45 minutes each day, and you will be able to take care
+                        of your health and fitness.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+        
+      </div>
+      
+      </div>
+
+      <div class=" flex place-content-center bg-gray-100">
+        <div class="btn bg-yellow-300 hover:bg-yellow-400 text-sm my-10">
+          <a href="{% url 'PoseCheck:index' %}">Get Started</a>
+        </div>
+      </div>
+
+      
+      <script>
+        function openYouTubeVideo() {
+            var videoId = "I3dezFzsNss";            
+            var embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";    
+            // Calculate the center position for the popup window
+            var screenWidth = window.screen.width;
+            var screenHeight = window.screen.height;
+            var popupWidth = 800;
+            var popupHeight = 600;
+            var left = (screenWidth - popupWidth) / 2;
+            var top = (screenHeight - popupHeight) / 2;
+    
+            // Create a modal or a popup window to display the video
+            var popupWindow = window.open(embedUrl, "_blank", "width=800,height=600,left=" + left + ",top=" + top);
+        }
+    </script>
+    
+
+{% endblock %}

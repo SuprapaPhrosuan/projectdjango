@@ -1,0 +1,6 @@
+django
+django-admin-soft-dashboard
+mediapipe
+pygame
+opencv-python
+whitenoise

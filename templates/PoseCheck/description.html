@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>{% block title %}final project{% endblock %}</title>
+    </head>
+    <body>
+    
+    <div class="h-screen md:bg-blue-300">
+        <div class="hero h-screen">            
+        {%block content %}
+        <div class="flex bg-white shadow-xl p-10 w-screen lg:w-max rounded-box justify-center flex-col">
+            <div class="grid justify-items-end">
+                <button class="btn btn-circle btn-sm btn-neutral" onclick="window.history.back()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>         
+            <div class="flex flex-col w-full lg:flex-row justify-center ">
+              <div class="grid rounded-box justify-center w-full lg:justify-end gl:py-0 py-10">                
+                <iframe class="rounded-lg hidden sm:block" width="500" height="250" src="{{ exercise.video }}" title="{{ exercise.title }}" frameborder="0" allowfullscreen></iframe>
+                <iframe class="rounded-lg sm:hidden" width="350" height="200" src="{{ exercise.video }}" title="{{ exercise.title }}" frameborder="0" allowfullscreen></iframe>
+              </div>
+              <div class="ps-10 w-screen md:max-w-lg self-center">
+                <p class=" text-xl font-semibold capitalize pb-3 text-slate-700">{{exercise.title}}</p>
+      
+                <p class="flex gap-3">
+                  <svg
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 0.5C4.49 0.5 0 4.99 0 10.5C0 16.01 4.49 20.5 10 20.5C15.51 20.5 20 16.01 20 10.5C20 4.99 15.51 0.5 10 0.5ZM14.35 14.07C14.21 14.31 13.96 14.44 13.7 14.44C13.57 14.44 13.44 14.41 13.32 14.33L10.22 12.48C9.45 12.02 8.88 11.01 8.88 10.12V6.02C8.88 5.61 9.22 5.27 9.63 5.27C10.04 5.27 10.38 5.61 10.38 6.02V10.12C10.38 10.48 10.68 11.01 10.99 11.19L14.09 13.04C14.45 13.25 14.57 13.71 14.35 14.07Z"
+                      fill="#292D32"
+                    />
+                  </svg>
+                  {{exercise.time}}
+                </p>
+                <p class="text-md font-semibold text-slate-700">description</p>
+                <p class="text-md text-slate-700">{{exercise.description}}</p>
+                <div onclick="window.location.href='/detection/{{ exercise.code }}'" class="btn bg-yellow-300 hover:bg-yellow-400 text-sm mt-3">
+                  WORKOUT
+              </div>
+              </div>                
+            </div>            
+          </div>          
+        {% endblock %}
+        </div>
+    </div>
+
+    
+</body>
+</html>

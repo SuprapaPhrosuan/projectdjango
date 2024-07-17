@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>{% block title %}final project{% endblock %}</title>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="navbar bg-base-100">
+            <div class="navbar-start">
+              <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                  <li><a href="{% url 'PoseCheck:index' %}" class="text-lg {% if not categ_id %}active{% endif %}">All</a></li>
+                  {% for c in category %}
+                  <li><a href="{% url 'PoseCheck:index' %}?categoryid={{c.id}}" class="text-lg {% if categ_id|add:'0' == c.id %}active{% endif %}">{{c.name}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <a href="{% url 'myapp:index' %}" class="link link-hover text-2xl font-bold md:ps-20">PoseCheck</a>
+            </div>
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1">
+                  <li><a href="{% url 'PoseCheck:index' %}" class="text-lg {% if not categ_id %}active{% endif %}" >All</a></li>
+                  {% for c in category %}
+                  <li><a href="{% url 'PoseCheck:index' %}?categoryid={{c.id}}" class="text-lg {% if categ_id|add:'0' == c.id %}active{% endif %}">{{c.name}}</a></li>
+                  {% endfor %}
+                </ul>
+            </div>
+            <div class="navbar-end">
+            </div>
+            
+        </div>
+        <div class="hero p-10">
+            <div class="grid grid-cols-2 content-around gap-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+        <script src="" async defer></script>
+    </body>
+</html>
+
+<style>
+  .btn {
+      text-transform: none;
+      font-weight: 600;
+    }
+    .p{
+      text-transform: none;
+      color: #424242;
+    }
+    .h-100{
+      height: 26rem;
+    }
+    .h-110{
+      height: 28rem;
+    }
+    .w-100{
+      width: 30rem;
+    }
+    .active {
+      
+    }
+    .navbar {
+      min-height: 6rem/* 64px */;
+    }
+    .card{
+      overflow: hidden;
+    }
+    .card.image-full:before {
+      opacity: 0;
+      object-fit: scale-down;  
+    }
+    /*.card.image-full:hover > figure img{
+      transform: translateY(-100px);
+    }*/
+    .card.image-full > figure img{
+      transition: 0.5s;  
+    }
+    .card.image-full > .card-body{
+      z-index: 1;
+      box-sizing: border-box;
+      bottom: 0;
+    }
+</style>
