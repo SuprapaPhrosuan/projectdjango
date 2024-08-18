@@ -26,46 +26,107 @@
 </html>
 
 <style>
+  .p{
+    text-transform: none;
+    color: #424242;
+  }
+  .h-100{
+    height: 26rem;
+  }
+  .h-110{
+    height: 28rem;
+  }
+  .w-100{
+    width: 30rem;
+  }
+  .active {
+
+  }
+  .navbar {
+    min-height: 6rem/* 64px */;
+  }
+  .card{
+    overflow: hidden;
+  }
+  .card.image-full:before {
+    opacity: 0;
+    object-fit: scale-down;  
+  }
+  /*.card.image-full:hover > figure img{
+    transform: translateY(-100px);
+  }*/
+  .card.image-full > figure img{
+    transition: 0.5s;  
+  }
+  .card.image-full > .card-body{
+    z-index: 1;
+    box-sizing: border-box;
+    bottom: 0;
+  }
   .btn {
-      text-transform: none;
-      font-weight: 600;
-    }
-    .p{
-      text-transform: none;
-      color: #424242;
-    }
-    .h-100{
-      height: 26rem;
-    }
-    .h-110{
-      height: 28rem;
-    }
-    .w-100{
-      width: 30rem;
-    }
-    .active {
-      
-    }
-    .navbar {
-      min-height: 6rem/* 64px */;
-    }
-    .card{
-      overflow: hidden;
-    }
-    .card.image-full:before {
-      opacity: 0;
-      object-fit: scale-down;  
-    }
-    /*.card.image-full:hover > figure img{
-      transform: translateY(-100px);
-    }*/
-    .card.image-full > figure img{
-      transition: 0.5s;  
-    }
-    .card.image-full > .card-body{
-      z-index: 1;
-      box-sizing: border-box;
-      bottom: 0;
-    }
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background: #fde047;
+    position: relative;
+    font-weight: 600;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms;
+    overflow: hidden;
+   }
+
+   .btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #212121;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms
+   }
+
+   .btn:hover {
+    color: #e8e8e8;
+   }
+
+   .btn:hover::before {
+    width: 100%;
+   }
+   /* <reset-style> ============================ */
+  a {
+    text-decoration: none;
+  }
+  /* <main-style> ============================ */
+  .video__link{
+    color: #424242;
+    line-height: 2;
+    position: relative;
+  }
+
+  .video__link::before {
+    content: '';
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #424242;
+    position: absolute;
+    bottom: -.25rem;
+    left: 50%;
+    transition: width .4s, left .4s;
+  }
+
+  .video__link:hover::before {
+    width: 100%;
+    left: 0;
+  }
+     
 </style>
 

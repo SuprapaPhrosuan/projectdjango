@@ -6,6 +6,7 @@ class PoseCheckAdmin(admin.ModelAdmin):
     list_filter = ['category']
     search_fields = ['code','title']
     prepopulated_fields = {'slug': ['title']}
+    ordering = ['code','title']
 
 admin.site.register(Category)
 admin.site.register(Exercise, PoseCheckAdmin)
