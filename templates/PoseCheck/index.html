@@ -4,7 +4,7 @@
 
 {% block content %}
     {% for e in exercise %}
-    <div class="group flex flex-col items-center">
+    <a href="{% url 'PoseCheck:description' slug=e.slug %}" class="group flex flex-col items-center">
         <div class="card w-40 h-60 md:w-52 md:h-72 lg:w-60 lg:h-80 bg-base-100 shadow-xl image-full group-hover:scale-110 group-hover:duration-500">
             <figure>
                 {% if e.image %}
@@ -15,8 +15,8 @@
             </figure>
         </div>
         <div class="pt-5 text-md font-medium sm:text-xl md:text-lg">
-            <a href="{% url 'PoseCheck:description' slug=e.slug %}">{{e.title}}</a>
+            {{ e.title }}
         </div>
-    </div>    
+    </a>    
     {% endfor %}
 {% endblock %}

@@ -18,7 +18,7 @@
     
     <div class="h-screen md:bg-blue-300">
         <div class="hero h-screen">            
-        {%block content %}
+        {% block content %}
         <div class="flex bg-white shadow-xl p-10 w-screen lg:w-max rounded-box justify-center flex-col">
             <div class="grid justify-items-end">
                 <button class="btn btn-circle btn-sm btn-neutral" onclick="window.history.back()">
@@ -26,12 +26,12 @@
                 </button>
             </div>         
             <div class="flex flex-col w-full lg:flex-row justify-center ">
-              <div class="grid rounded-box justify-center w-full lg:justify-end gl:py-0 py-10">                
-                <iframe class="rounded-lg hidden sm:block" width="500" height="250" src="{{ exercise.video }}" title="{{ exercise.title }}" frameborder="0" allowfullscreen></iframe>
+              <div class="grid rounded-box justify-center w-full lg:justify-end py-10 lg:py-0">                
                 <iframe class="rounded-lg sm:hidden" width="350" height="200" src="{{ exercise.video }}" title="{{ exercise.title }}" frameborder="0" allowfullscreen></iframe>
+                <iframe class="rounded-lg hidden sm:block" width="500" height="250" src="{{ exercise.video }}" title="{{ exercise.title }}" frameborder="0" allowfullscreen></iframe>
               </div>
               <div class="ps-10 w-screen md:max-w-lg self-center">
-                <p class=" text-xl font-semibold capitalize pb-3 text-slate-700">{{exercise.title}}</p>
+                <p class=" text-xl font-semibold capitalize pb-3 text-slate-700">{{ exercise.title }}</p>
       
                 <p class="flex gap-3">
                   <svg
@@ -46,10 +46,10 @@
                       fill="#292D32"
                     />
                   </svg>
-                  {{exercise.time}}
+                  {{ exercise.time }}
                 </p>
-                <p class="text-md font-semibold text-slate-700">description</p>
-                <p class="text-md text-slate-700">{{exercise.description}}</p>
+                <p class="text-md font-semibold text-slate-700">Description</p>
+                <p class="text-md text-slate-700">{{ exercise.description }}</p>
                 <div onclick="window.location.href='/detection/{{ exercise.code }}'" class="btn bg-yellow-300 hover:bg-yellow-400 text-sm mt-3">
                   WORKOUT
               </div>
@@ -60,6 +60,5 @@
         </div>
     </div>
 
-    
 </body>
 </html>
