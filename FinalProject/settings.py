@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'myapp',
     'PoseCheck',
     'detection',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,15 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'FinalProject.wsgi.application'
+ASGI_APPLICATION = 'FinalProject.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
+
 
 
 # Database
