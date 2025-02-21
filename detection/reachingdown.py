@@ -1,4 +1,3 @@
-#overheadtricepstretch_L.py
 import base64
 import cv2
 import numpy as np
@@ -6,9 +5,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 import mediapipe as mp
 import detection.utills as u
-
 mp_pose = mp.solutions.pose
-
 hidden_landmarks = [0, 1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22, 29, 30]
 
 class StreamConsumer(AsyncWebsocketConsumer):
@@ -67,28 +64,31 @@ class StreamConsumer(AsyncWebsocketConsumer):
                     landmark_drawing_spec=None,
                 )
 
-                left_shoulder_angle = u.calculateAngle2(landmarks[point[23]],landmarks[point[11]],landmarks[point[13]])
-                left_elbow_angle = u.calculateAngle2(landmarks[point[15]],landmarks[point[13]],landmarks[point[11]])             
+                right_hip_angle = u.calculateAngle2(landmarks[point[26]], landmarks[point[24]], landmarks[point[12]])
+                right_knee_angle = u.calculateAngle2(landmarks[point[16]],landmarks[point[14]],landmarks[point[12]])
                 distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])
-                
                 color2 = (0, 0, 255)
-                cv2.putText(frame, f'{int(left_shoulder_angle)}', (int(landmarks[point[11]][0]), int(landmarks[point[11]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
-                cv2.putText(frame, f'{int(left_elbow_angle)}', (int(landmarks[point[13]][0]), int(landmarks[point[13]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
-                
-               
+                cv2.putText(frame, f'{int(right_hip_angle)}', (int(landmarks[point[24]][0]), int(landmarks[point[24]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
+                cv2.putText(frame, f'{int(right_knee_angle)}', (int(landmarks[point[26]][0]), int(landmarks[point[26]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
+
                 if distance_camera >= 600:
                     label = 'Too Close to Camera'
-                    color = (44,46,51)
+                    color = (44,46,51)        
                 else:
-                    if (170 <= left_shoulder_angle <= 220 and left_elbow_angle < 140):
+                    if (150 <= right_knee_angle <= 210) and (10 < right_hip_angle <= 95):
                         label = 'Correct pose'
                         color = (0, 255, 0)
-                    elif (left_shoulder_angle < 170 and left_elbow_angle < 140) or (left_shoulder_angle < 170 and left_elbow_angle >= 140):
-                        label = 'Raise R-elbow & stretch overhead!'
-                        color = (0, 0, 255)
+                    elif (right_knee_angle < 150) and (10 < right_hip_angle <= 95):
+                        label = 'Make your legs tighter !' 
+                        color = (0, 0, 255)            
+                    elif (150 <= right_knee_angle <= 210) and (95 < right_hip_angle <= 210):                                                                                                    
+                        label = 'Bend down more !'
+                        color = (0, 0, 255)        
                     else:
                         label = 'Unknown' 
                         color = (0, 0, 255)
+
+                
                 padding_x = 20
                 padding_y = 15  
 
@@ -103,13 +103,13 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 cv2.rectangle(frame, rect_top_left, rect_bottom_right, color, -1)
                 cv2.putText(frame,label,(label_x + padding_x, label_y),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255),2,cv2.LINE_AA)
                 
-     
-                x1 = landmarks[11][0]
-                y1 = landmarks[11][1]
-                x2 = landmarks[13][0]
-                y2 = landmarks[13][1]
-                x3 = landmarks[15][0]
-                y3 = landmarks[15][1]
+                            
+                x1 = landmarks[12][0]
+                y1 = landmarks[12][1]
+                x2 = landmarks[24][0]
+                y2 = landmarks[24][1]
+                x3 = landmarks[26][0]
+                y3 = landmarks[26][1]
                 aux_image = np.zeros(frame.shape, np.uint8)
                 cv2.line(aux_image, (x1, y1), (x2, y2), (255, 255, 255), 20)
                 cv2.line(aux_image, (x2, y2), (x3, y3), (255, 255, 255), 20)

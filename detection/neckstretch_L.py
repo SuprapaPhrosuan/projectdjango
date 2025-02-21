@@ -1,4 +1,3 @@
-#neckstretch_R.py
 import base64
 import cv2
 import numpy as np
@@ -67,7 +66,7 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 )
 
 
-                right_shoulder_angle = u.calculateAngle2(landmarks[point[8]],landmarks[point[12]],landmarks[point[11]])
+                right_shoulder_angle = u.calculateAngle(landmarks[point[8]],landmarks[point[12]],landmarks[point[11]])
                 distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])
 
                 color2 = (0, 0, 255)
