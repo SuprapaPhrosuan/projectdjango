@@ -4,8 +4,15 @@ import cv2
 import numpy as np
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+<<<<<<< HEAD
 import mediapipe as mp
 import detection.utills as u
+=======
+import asyncio
+import mediapipe as mp
+import detection.utills as u
+import time
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
 
 mp_pose = mp.solutions.pose
 
@@ -69,28 +76,53 @@ class StreamConsumer(AsyncWebsocketConsumer):
 
                 left_shoulder_angle = u.calculateAngle2(landmarks[point[13]],landmarks[point[11]],landmarks[point[23]]) 
                 left_elbow_angle = u.calculateAngle(landmarks[point[15]],landmarks[point[13]],landmarks[point[11]])
+<<<<<<< HEAD
                 distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])         
+=======
+                distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])       
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                 color2 = (0, 0, 255)
                 cv2.putText(frame, f'{int(left_shoulder_angle)}', (int(landmarks[point[11]][0]), int(landmarks[point[11]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
                 cv2.putText(frame, f'{int(left_elbow_angle)}', (int(landmarks[point[13]][0]), int(landmarks[point[13]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)   
     
+<<<<<<< HEAD
                 if distance_camera >= 600:
                     label = 'Too Close to Camera'
                     color = (44,46,51)                    
+=======
+               
+                if distance_camera >= 600:
+                    label = 'Too Close to Camera'
+                    color = (44,46,51)
+                    
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                 else:
                     if  (65 <= left_shoulder_angle <= 100) and (160 <= left_elbow_angle <= 200): 
                         label = 'Correct pose'
                         color = (0, 255, 0)
+<<<<<<< HEAD
                     elif (left_shoulder_angle < 65 or 100 < left_shoulder_angle <= 360) and (160 <= left_elbow_angle <= 200):
                         label = 'Stretch R-arm to L-side more !' 
                         color = (0, 0, 255)
                     elif (left_shoulder_angle < 65 and left_elbow_angle < 160) or (left_shoulder_angle <= 360 and left_elbow_angle <= 360):
                         label = 'Do not bend R-elbow !'
                         color = (0, 0, 255)
+=======
+                    
+                    elif (left_shoulder_angle < 65 or 100 < left_shoulder_angle <= 360) and (160 <= left_elbow_angle <= 200):
+                        label = 'Stretch R-arm to L-side more !' 
+                        color = (0, 0, 255)
+
+                    elif (left_shoulder_angle < 65 and left_elbow_angle < 160) or (left_shoulder_angle <= 360 and left_elbow_angle <= 360):
+                        label = 'Do not bend R-elbow !'
+                        color = (0, 0, 255)
+
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                     else:
                         label = 'Unknown' 
                         color = (0, 0, 255)
 
+<<<<<<< HEAD
                 padding_x = 20
                 padding_y = 15  
 
@@ -113,6 +145,21 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 x3 = landmarks[15][0]
                 y3 = landmarks[15][1]
     
+=======
+
+                height, width, _ = frame.shape
+                label_x = int(width / 2) - int(len(label) * 10) 
+                label_y = height - 30 
+
+                cv2.putText(frame, label, (label_x, label_y), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
+                                
+                x1 = int(landmarks[point[11]][0])
+                y1 = int(landmarks[point[11]][1])
+                x2 = int(landmarks[point[13]][0])
+                y2 = int(landmarks[point[13]][1])
+                x3 = int(landmarks[point[15]][0])
+                y3 = int(landmarks[point[15]][1])
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                 aux_image = np.zeros(frame.shape, np.uint8)
                 cv2.line(aux_image, (x1, y1), (x2, y2), (255, 255, 255), 20)
                 cv2.line(aux_image, (x2, y2), (x3, y3), (255, 255, 255), 20)

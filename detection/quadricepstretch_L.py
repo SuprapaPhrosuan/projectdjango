@@ -4,8 +4,15 @@ import cv2
 import numpy as np
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+<<<<<<< HEAD
 import mediapipe as mp
 import detection.utills as u
+=======
+import asyncio
+import mediapipe as mp
+import detection.utills as u
+import time
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
 
 mp_pose = mp.solutions.pose
 
@@ -68,6 +75,7 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 )
 
                 right_knee_angle = u.calculateAngle2(landmarks[point[24]],landmarks[point[26]],landmarks[point[28]])
+<<<<<<< HEAD
                 distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])
                 color2 = (0, 0, 255)
                 cv2.putText(frame, f'{int(right_knee_angle)}', (int(landmarks[point[26]][0]), int(landmarks[point[26]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
@@ -76,6 +84,19 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 if distance_camera >= 600:
                     label = 'Too Close to Camera'
                     color = (44,46,51)                    
+=======
+
+                distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])
+                            
+                color2 = (0, 0, 255)
+                cv2.putText(frame, f'{int(right_knee_angle)}', (int(landmarks[point[26]][0]), int(landmarks[point[26]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
+    
+                        
+                if distance_camera >= 600:
+                    label = 'Too Close to Camera'
+                    color = (44,46,51)
+                    
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                 else:
                     if 15 <= right_knee_angle <= 60:
                         label = 'Correct pose'
@@ -83,13 +104,22 @@ class StreamConsumer(AsyncWebsocketConsumer):
                     elif right_knee_angle > 150:
                         label = 'Lift your left leg backward !'
                         color = (0, 0, 255)
+<<<<<<< HEAD
                     elif 60 < right_knee_angle <= 150: 
                         label = 'Make leg angle narrower !'
                         color = (0, 0, 255)                            
+=======
+                    
+                    elif 60 < right_knee_angle <= 150: 
+                        label = 'Make leg angle narrower !'
+                        color = (0, 0, 255)
+                            
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                     else:
                         label = 'Unknown' 
                         color = (0, 0, 255) 
 
+<<<<<<< HEAD
                 padding_x = 20
                 padding_y = 15  
 
@@ -111,6 +141,20 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 y2 = landmarks[26][1]
                 x3 = landmarks[28][0]
                 y3 = landmarks[28][1]
+=======
+                height, width, _ = frame.shape
+                label_x = int(width / 2) - int(len(label) * 10) 
+                label_y = height - 30 
+
+                cv2.putText(frame, label, (label_x, label_y), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
+                                
+                x1 = int(landmarks[point[24]][0])
+                y1 = int(landmarks[point[24]][1])
+                x2 = int(landmarks[point[26]][0])
+                y2 = int(landmarks[point[26]][1])
+                x3 = int(landmarks[point[28]][0])
+                y3 = int(landmarks[point[28]][1])
+>>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                 aux_image = np.zeros(frame.shape, np.uint8)
                 cv2.line(aux_image, (x1, y1), (x2, y2), (255, 255, 255), 20)
                 cv2.line(aux_image, (x2, y2), (x3, y3), (255, 255, 255), 20)
