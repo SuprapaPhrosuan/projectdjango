@@ -4,20 +4,10 @@ import cv2
 import numpy as np
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
-<<<<<<< HEAD
 import mediapipe as mp
 import detection.utills as u
 
 mp_pose = mp.solutions.pose
-=======
-import asyncio
-import mediapipe as mp
-import detection.utills as u
-import time
-
-mp_pose = mp.solutions.pose
-
->>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
 hidden_landmarks = [0, 1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22, 29, 30]
 
 class StreamConsumer(AsyncWebsocketConsumer):
@@ -77,27 +67,26 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 )
 
 
-                right_shoulder_angle = u.calculateAngle(landmarks[point[8]],landmarks[point[12]],landmarks[point[11]])
-<<<<<<< HEAD
+                right_shoulder_angle = u.calculateAngle2(landmarks[point[8]],landmarks[point[12]],landmarks[point[11]])
                 distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])
-                
+
                 color2 = (0, 0, 255)
                 cv2.putText(frame, f'{int(right_shoulder_angle)}', (int(landmarks[point[12]][0]), int(landmarks[point[12]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
-    
+               
                 if distance_camera >= 600:
                     label = 'Too Close to Camera'
-                    color = (44,46,51)                    
+                    color = (44,46,51)        
                 else:
                     if 75 <= right_shoulder_angle <= 100:
                         label = 'Correct pose'
-                        color = (0, 255, 0)                            
+                        color = (0, 255, 0)                
                     elif right_shoulder_angle < 75:
                         label = 'Stretch more to the left !'
-                        color = (0, 0, 255)
+                        color = (0, 0, 255)                
                     else:
                         label = 'Unknown' 
                         color = (0, 0, 255)
-                                    
+                        
                  
                 padding_x = 20
                 padding_y = 15  
@@ -112,64 +101,20 @@ class StreamConsumer(AsyncWebsocketConsumer):
 
                 cv2.rectangle(frame, rect_top_left, rect_bottom_right, color, -1)
                 cv2.putText(frame,label,(label_x + padding_x, label_y),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255),2,cv2.LINE_AA)
-                     
+                
+     
                 x1 = landmarks[14][0]
                 y1 = landmarks[14][1]
                 x2 = landmarks[12][0]
                 y2 = landmarks[12][1]
                 x3 = landmarks[11][0]
                 y3 = landmarks[11][1]
-=======
-                
-                distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])
-                color2 = (0, 0, 255)
-                cv2.putText(frame, f'{int(right_shoulder_angle)}', (int(landmarks[point[12]][0]), int(landmarks[point[12]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
-               
-                if distance_camera >= 600:
-                    label = 'Too Close to Camera'
-                    color = (44,46,51)
-                    
-                else:
-                    if 75 <= right_shoulder_angle <= 100:
-                        label = 'Correct pose'
-                        color = (0, 255, 0)
-                            
-                    elif right_shoulder_angle < 75:
-                        label = 'Stretch more to the left !'
-                        color = (0, 0, 255)
-                            
-                    else:
-                        label = 'Unknown' 
-                        color = (0, 0, 255)
-
-                height, width, _ = frame.shape
-                label_x = int(width / 2) - int(len(label) * 10) 
-                label_y = height - 30 
-            
-                cv2.putText(frame, label, (label_x, label_y), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
-                                
-                x1 = int(landmarks[point[14]][0])
-                y1 = int(landmarks[point[14]][1])
-                x2 = int(landmarks[point[12]][0])
-                y2 = int(landmarks[point[12]][1])
-                x3 = int(landmarks[point[11]][0])
-                y3 = int(landmarks[point[11]][1])
->>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
                 aux_image = np.zeros(frame.shape, np.uint8)
                 cv2.line(aux_image, (x1, y1), (x2, y2), (255, 255, 255), 20)
                 cv2.line(aux_image, (x2, y2), (x3, y3), (255, 255, 255), 20)
                 cv2.line(aux_image, (x1, y1), (x3, y3), (255, 255, 255), 5)
-<<<<<<< HEAD
                 cv2.circle(frame, (x2, y2), 6, (96, 209, 244), 4) 
                 
-=======
-                contours = np.array([[x1, y1], [x2, y2], [x3, y3]])
-                cv2.fillPoly(aux_image, pts=[contours], color=(0, 255, 0))
-                frame = cv2.addWeighted(frame, 1, aux_image, 0.8, 0)
-                cv2.circle(frame, (x1, y1), 6, (0, 255, 255), 4)
-                cv2.circle(frame, (x2, y2), 6, (128, 0, 250), 4)
-                cv2.circle(frame, (x3, y3), 6, (255, 191, 0), 4)
->>>>>>> edfdc21de8eeacc59f424d07e95b84add01f37cc
 
             _, buffer = cv2.imencode('.jpg', frame)
             frame_base64 = base64.b64encode(buffer).decode('utf-8')
