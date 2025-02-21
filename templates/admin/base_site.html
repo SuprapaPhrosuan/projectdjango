@@ -1,0 +1,13 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}My Custom Blue Admin{% endblock title %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin_custom/styles.css' %}">
+{% endblock extrastyle %}
+
+{% block extrahead %}
+<script src="{% static 'admin_custom/scripts.js' %}"></script>
+
+{% endblock extrahead %}

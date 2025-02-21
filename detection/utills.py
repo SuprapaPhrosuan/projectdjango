@@ -1,11 +1,7 @@
-#utills.py
-import numpy as np
 import mediapipe as mp
 import math
-from time import time
 
 def calculateAngle(landmark1, landmark2, landmark3):
-    # Handle 2D landmarks (x, y)
     if len(landmark1) == 2:
         x1, y1 = landmark1
         z1 = 0
@@ -24,14 +20,12 @@ def calculateAngle(landmark1, landmark2, landmark3):
     else:
         x3, y3, z3 = landmark3
 
-    # Calculate angle using 2D coordinates (x and y)
     angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
     if angle < 0:
         angle += 360
     return angle
 
 def calculateAngle2(landmark1, landmark2, landmark3):
-    # If landmarks are 2D (only x and y), set z to 0 for calculation
     if len(landmark1) == 2:
         x1, y1 = landmark1
         z1 = 0
@@ -56,13 +50,7 @@ def calculateAngle2(landmark1, landmark2, landmark3):
         angle -= 360
     return angle
 
-
-def format_time(seconds):
-    minutes, seconds = divmod(int(seconds), 60)
-    return f'{int(seconds):02d}'
-
 def calculateDistance(landmark1, landmark2):
-    # Handle 2D landmarks (x, y)
     if len(landmark1) == 2:
         x1, y1 = landmark1
         z1 = 0
@@ -75,9 +63,7 @@ def calculateDistance(landmark1, landmark2):
     else:
         x2, y2, z2 = landmark2
 
-    # Calculate distance using 2D coordinates (x, y)
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-
 
 def get_pose_landmark_points():
     mp_pose = mp.solutions.pose

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pose Detection with Landmarks</title>
+    <title>shoulderstretch_L</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 flex items-center justify-center h-screen">
@@ -13,43 +13,37 @@
         document.addEventListener("DOMContentLoaded", () => {
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
-            canvas.width = 640; // Match backend resolution
+            canvas.width = 640 ;
             canvas.height = 480;
     
-            const code = "{{ code }}"; // Replace with actual code or context variable
-            const ws = new WebSocket(`ws://${window.location.host}/ws/detection/${code}/`);
+            const code = "{{ code }}";
+            const ws = new WebSocket(`wss://${window.location.host}/ws/detection/standingforwardbend/${code}/`);
     
-            ws.onopen = function(event) {
+            ws.onopen = async function(event) {
                 console.log("WebSocket connection opened:", event);
     
-                // Start webcam
                 navigator.mediaDevices.getUserMedia({ video: true })
                     .then(stream => {
                         const video = document.createElement("video");
                         video.srcObject = stream;
                         video.play();
     
-                        // Send frame to backend
-                        const sendFrame = () => {
-                            // Flip the canvas horizontally
-                            ctx.save(); // Save the current canvas state
-                            ctx.scale(-1, 1); // Flip horizontally
-                            ctx.translate(-canvas.width, 0); // Move canvas back into view
+                        const sendFrame = async () => {
+                            ctx.save(); 
+                            ctx.scale(-1, 1); 
+                            ctx.translate(-canvas.width, 0); 
 
-                            // Draw flipped video frame onto canvas
                             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                            ctx.restore(); // Restore the original canvas state
+                            ctx.restore(); 
 
-                            // Encode canvas as Base64 image
                             const frame = canvas.toDataURL("image/jpeg");
                             const base64Frame = frame.split(",")[1];
 
-                            // Send frame to backend
                             ws.send(JSON.stringify({ frame: base64Frame }));
                         };
 
-                        setInterval(sendFrame, 100); // Send frame every 100ms (10 FPS)
+                        setInterval(sendFrame, 100); 
                     })
                     .catch(error => {
                         console.error("Error accessing camera:", error);
@@ -63,7 +57,7 @@
                     const img = new Image();
                     img.src = `data:image/jpeg;base64,${data.frame}`;
                     img.onload = () => {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous frame
+                        ctx.clearRect(0, 0, canvas.width, canvas.height); 
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     };
                 }

@@ -4,13 +4,10 @@ import cv2
 import numpy as np
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
-import asyncio
 import mediapipe as mp
 import detection.utills as u
-import time
 
 mp_pose = mp.solutions.pose
-
 hidden_landmarks = [0, 1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22, 29, 30]
 
 class StreamConsumer(AsyncWebsocketConsumer):
@@ -84,7 +81,7 @@ class StreamConsumer(AsyncWebsocketConsumer):
                     
                     if 75 <= left_shoulder_angle <= 100:
                         label = 'Correct pose'
-                        color = (0, 255, 0)
+                        color = (39, 174, 96)
                             
                     elif left_shoulder_angle < 75:
                         label = 'Stretch more to the right !'
@@ -93,14 +90,24 @@ class StreamConsumer(AsyncWebsocketConsumer):
                     else:
                         label = 'Unknown' 
                         color = (0, 0, 255)
+                        
+                 
+                padding_x = 20
+                padding_y = 15  
 
                 height, width, _ = frame.shape
-                label_x = int(width / 2) - int(len(label) * 10) 
-                label_y = height - 30 
-            
-                cv2.putText(frame, label, (label_x, label_y), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
-                                
-                x1 = landmarks[13][0]
+                (label_width, label_height), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+
+                label_x = int(width / 2) - int((label_width + padding_x * 2) / 2) 
+                label_y = height - 20
+                rect_top_left = (label_x, label_y - label_height - padding_y)
+                rect_bottom_right = (label_x + label_width + padding_x * 2, label_y + padding_y)
+
+                cv2.rectangle(frame, rect_top_left, rect_bottom_right, color, -1)
+                cv2.putText(frame,label,(label_x + padding_x, label_y),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255),2,cv2.LINE_AA)
+                
+     
+                x1 = landmarks[13][0] 
                 y1 = landmarks[13][1]
                 x2 = landmarks[11][0]
                 y2 = landmarks[11][1]
@@ -110,12 +117,8 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 cv2.line(aux_image, (x1, y1), (x2, y2), (255, 255, 255), 20)
                 cv2.line(aux_image, (x2, y2), (x3, y3), (255, 255, 255), 20)
                 cv2.line(aux_image, (x1, y1), (x3, y3), (255, 255, 255), 5)
-                contours = np.array([[x1, y1], [x2, y2], [x3, y3]])
-                cv2.fillPoly(aux_image, pts=[contours], color=(0, 255, 0))
-                frame = cv2.addWeighted(frame, 1, aux_image, 0.8, 0)
-                cv2.circle(frame, (x1, y1), 6, (0, 255, 255), 4)
-                cv2.circle(frame, (x2, y2), 6, (128, 0, 250), 4)
-                cv2.circle(frame, (x3, y3), 6, (255, 191, 0), 4)
+                cv2.circle(frame, (x2, y2), 6, (96, 209, 244), 4) 
+                
 
             _, buffer = cv2.imencode('.jpg', frame)
             frame_base64 = base64.b64encode(buffer).decode('utf-8')

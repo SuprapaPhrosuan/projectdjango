@@ -4,10 +4,8 @@ import cv2
 import numpy as np
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
-import asyncio
 import mediapipe as mp
 import detection.utills as u
-import time
 
 mp_pose = mp.solutions.pose
 
@@ -97,19 +95,27 @@ class StreamConsumer(AsyncWebsocketConsumer):
                         label = 'Unknown' 
                         color = (0, 0, 255)
 
+                padding_x = 20
+                padding_y = 15  
 
                 height, width, _ = frame.shape
-                label_x = int(width / 2) - int(len(label) * 10) 
-                label_y = height - 30 
+                (label_width, label_height), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
 
-                cv2.putText(frame, label, (label_x, label_y), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
-                                
-                x1 = int(landmarks[point[12]][0])
-                y1 = int(landmarks[point[12]][1])
-                x2 = int(landmarks[point[14]][0])
-                y2 = int(landmarks[point[14]][1])
-                x3 = int(landmarks[point[16]][0])
-                y3 = int(landmarks[point[16]][1])
+                label_x = int(width / 2) - int((label_width + padding_x * 2) / 2) 
+                label_y = height - 20
+                rect_top_left = (label_x, label_y - label_height - padding_y)
+                rect_bottom_right = (label_x + label_width + padding_x * 2, label_y + padding_y)
+
+                cv2.rectangle(frame, rect_top_left, rect_bottom_right, color, -1)
+                cv2.putText(frame,label,(label_x + padding_x, label_y),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255),2,cv2.LINE_AA)
+                
+                    
+                x1 = landmarks[12][0]
+                y1 = landmarks[12][1]
+                x2 = landmarks[14][0]
+                y2 = landmarks[14][1]
+                x3 = landmarks[16][0]
+                y3 = landmarks[16][1]
                 aux_image = np.zeros(frame.shape, np.uint8)
                 cv2.line(aux_image, (x1, y1), (x2, y2), (255, 255, 255), 20)
                 cv2.line(aux_image, (x2, y2), (x3, y3), (255, 255, 255), 20)
