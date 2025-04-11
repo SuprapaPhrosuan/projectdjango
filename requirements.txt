@@ -1,5 +1,4 @@
 django == 5.1.1
-django-admin-soft-dashboard == 1.0.14
 mediapipe == 0.10.14
 opencv-contrib-python == 4.9.0.80
 whitenoise == 6.7.0
