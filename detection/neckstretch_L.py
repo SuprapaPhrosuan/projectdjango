@@ -72,9 +72,9 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 color2 = (0, 0, 255)
                 cv2.putText(frame, f'{int(right_shoulder_angle)}', (int(landmarks[point[12]][0]), int(landmarks[point[12]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
                
-                if distance_camera >= 600:
+                if distance_camera >= 200:
                     label = 'Too Close to Camera'
-                    color = (44,46,51)        
+                    color = (44,46,51)            
                 else:
                     if 75 <= right_shoulder_angle <= 100:
                         label = 'Correct pose'

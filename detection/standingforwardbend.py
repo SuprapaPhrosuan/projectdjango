@@ -67,24 +67,28 @@ class StreamConsumer(AsyncWebsocketConsumer):
                     landmark_drawing_spec=None,
                 )
 
-                left_shoulder_angle = u.calculateAngle2(landmarks[point[23]],landmarks[point[11]],landmarks[point[13]])
-                left_hip_angle = u.calculateAngle(landmarks[point[11]],landmarks[point[23]],landmarks[point[25]])                
+                right_hip_angle = u.calculateAngle2(landmarks[point[26]],landmarks[point[24]],landmarks[point[12]])
+                right_knee_angle = u.calculateAngle2(landmarks[point[24]],landmarks[point[26]],landmarks[point[28]])                
                 distance_camera = u.calculateDistance(landmarks[point[12]],landmarks[point[24]])
                             
                 color2 = (0, 0, 255)
-                cv2.putText(frame, f'{int(left_shoulder_angle)}', (int(landmarks[point[11]][0]), int(landmarks[point[11]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
-                cv2.putText(frame, f'{int(left_hip_angle)}', (int(landmarks[point[23]][0]), int(landmarks[point[23]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
+                cv2.putText(frame, f'{int(right_hip_angle)}', (int(landmarks[point[24]][0]), int(landmarks[point[24]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
+                cv2.putText(frame, f'{int(right_knee_angle)}', (int(landmarks[point[26]][0]), int(landmarks[point[26]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3)
 
                         
-                if distance_camera >= 600:
+                if distance_camera >= 200:
                     label = 'Too Close to Camera'
-                    color = (44,46,51)                    
-                else:                
-                    if (140 <= left_shoulder_angle <= 165) and (120 <left_hip_angle <= 165):
+                    color = (44,46,51)                        
+                else:
+                    if (150 <= right_knee_angle <= 210) and (10 < right_hip_angle <= 95):
                         label = 'Correct pose'
-                    elif (left_shoulder_angle <= 360) and (left_hip_angle <= 165 or 165 < left_hip_angle <= 360):
-                        label = 'Stretch arms overhead to R !' 
-                        color = (0, 0, 255)                            
+                        color = (0, 255, 0)
+                    elif (right_knee_angle < 150) and (10 < right_hip_angle <= 95):
+                        label = 'Make your legs tighter !'      
+                        color = (0, 0, 255)  
+                    elif (150 <= right_knee_angle <= 210) and (95 < right_hip_angle <= 210):                                                                                                    
+                        label = 'Bend down more !' 
+                        color = (0, 0, 255)             
                     else:
                         label = 'Unknown' 
                         color = (0, 0, 255)
@@ -104,12 +108,12 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 cv2.putText(frame,label,(label_x + padding_x, label_y),cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255),2,cv2.LINE_AA)
                 
                     
-                x1 = landmarks[11][0]
-                y1 = landmarks[11][1]
-                x2 = landmarks[23][0]
-                y2 = landmarks[23][1]
-                x3 = landmarks[25][0]
-                y3 = landmarks[25][1]
+                x1 = landmarks[12][0]
+                y1 = landmarks[12][1]
+                x2 = landmarks[24][0]
+                y2 = landmarks[24][1]
+                x3 = landmarks[26][0]
+                y3 = landmarks[26][1]
                 aux_image = np.zeros(frame.shape, np.uint8)
                 cv2.line(aux_image, (x1, y1), (x2, y2), (255, 255, 255), 20)
                 cv2.line(aux_image, (x2, y2), (x3, y3), (255, 255, 255), 20)

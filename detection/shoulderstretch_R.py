@@ -38,7 +38,7 @@ class StreamConsumer(AsyncWebsocketConsumer):
             decoded_data = np.frombuffer(base64.b64decode(frame_data), dtype=np.uint8)
             frame = cv2.imdecode(decoded_data, cv2.IMREAD_COLOR)
 
-            resized_frame = cv2.resize(frame, (640, 480))
+            resized_frame = cv2.resize(frame, (1920, 1080))
 
             rgb_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
 
@@ -76,7 +76,7 @@ class StreamConsumer(AsyncWebsocketConsumer):
                 cv2.putText(frame, f'{int(left_elbow_angle)}', (int(landmarks[point[13]][0]), int(landmarks[point[13]][1])), cv2.FONT_HERSHEY_PLAIN, 2, color2, 3) 
                 
                
-                if distance_camera >= 600:
+                if distance_camera >= 200:
                     label = 'Too Close to Camera'
                     color = (44,46,51)        
                 else:
